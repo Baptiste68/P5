@@ -17,7 +17,9 @@ In this part, you will want to find a specific aliment. To do so you will need t
 In this part, you can simply watch the substitute you had chosen.
 
 3 - Functions
+
 Function – DisplayMainMenu()
+
   This function display the main menu. 
   In this main menu you have 2 choices:
   1	Find a substitute
@@ -25,6 +27,7 @@ Function – DisplayMainMenu()
   The user then choose either 1 or 2
 
 Function – FindSubstitute()
+
   This function will start the process of finding a substitute.
   This function will use 4 functions:
   -	SelectCategory
