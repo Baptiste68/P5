@@ -16,7 +16,9 @@ In this part, you will want to find a specific aliment. To do so you will need t
 2 – Consult your substitute
 In this part, you can simply watch the substitute you had chosen.
 
+
 3 - Functions
+
 
 Function – DisplayMainMenu()
 
@@ -25,6 +27,7 @@ Function – DisplayMainMenu()
   1	Find a substitute
   2	Check my substitutes
   The user then choose either 1 or 2
+
 
 Function – FindSubstitute()
 
@@ -35,13 +38,17 @@ Function – FindSubstitute()
   -	GetListAliment
   -	ShowListAliment
 
+
 Function – SelectCategory
+
   First display the different Category
   The user enters a number related to a category.
   Manage errors.
   The category is then returned
 
+
 Function – SelectAliment
+
   First display the different Aliments
   The user enters a number related to a Aliment.
   Manage errors.
