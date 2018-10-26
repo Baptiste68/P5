@@ -21,32 +21,32 @@ In this part, you can simply watch the substitute you had chosen.
 
 
 Function – DisplayMainMenu()  
-  This function display the main menu.  
-  In this main menu you have 2 choices:  
-  1	Find a substitute  
-  2	Check my substitutes  
-  The user then choose either 1 or 2  
+    This function display the main menu.  
+    In this main menu you have 2 choices:  
+    1	Find a substitute  
+    2	Check my substitutes  
+    The user then choose either 1 or 2  
 
 
 Function – FindSubstitute()  
-  This function will start the process of finding a substitute.  
-  This function will use 4 functions:  
-  -	SelectCategory  
-  -	SelectAliment  
-  -	GetListAliment  
-  -	ShowListAliment  
+    This function will start the process of finding a substitute.  
+    This function will use 4 functions:  
+    -	SelectCategory  
+    -	SelectAliment  
+    -	GetListAliment  
+    -	ShowListAliment  
 
 
 Function – SelectCategory    
-  First display the different Category  
-  The user enters a number related to a category.  
-  Manage errors.  
-  The category is then returned  
+    First display the different Category  
+    The user enters a number related to a category.  
+    Manage errors.  
+    The category is then returned  
 
 
 Function – SelectAliment   
-  First display the different Aliments  
-  The user enters a number related to a Aliment.  
-  Manage errors.  
-  The aliment is then returned  
+    First display the different Aliments  
+    The user enters a number related to a Aliment.  
+    Manage errors.  
+    The aliment is then returned  
 
