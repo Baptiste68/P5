@@ -9,7 +9,7 @@ It is split in two part
 ## Part 1 – Substitute an Aliment
 In this part, you will want to find a specific aliment. To do so you will need to follow the process under:
 -	Select a Category. Here, you choose in which category is the aliment you want to substitute (Vegetable, Fruits,…)
--	Select an Aliment. You choose the exact aliment you want to substitute. Then you will get a list of aliments that can be a substitute.
+-	Select a Food. You choose the exact aliment you want to substitute. Then you will get a list of aliments that can be a substitute.
 -	*Optional* Save the result. You have the possibility to save your search result to consult it later.
 
 
@@ -44,9 +44,9 @@ Function – SelectCategory
     The category is then returned  
 
 
-Function – SelectAliment   
-    First display the different Aliments  
-    The user enters a number related to a Aliment.  
+Function – SelectFood   
+    First display the different foods  
+    The user enters a number related to a food.  
     Manage errors.  
     The aliment is then returned  
 
