@@ -31,10 +31,10 @@ Function – DisplayMainMenu()
 Function – FindSubstitute()  
     This function will start the process of finding a substitute.  
     This function will use 4 functions:  
-    -	SelectCategory  
-    -	SelectAliment  
-    -	GetListAliment  
-    -	ShowListAliment  
+    -	SelectCategory   
+    -	SelectFood   
+    -	GetListFood   
+    -	ShowListFood   
 
 
 Function – SelectCategory    
