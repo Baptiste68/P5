@@ -37,7 +37,7 @@ Function – sub_menu()
     -	get_substitute   
     
 
-Function - connect_db()
+Function - connect_db()  
     Connect the user to the DB so we can do requests.  
 
 Function – select_category()  
@@ -59,5 +59,7 @@ Function - get_substitute(category, nutri_score)
     Request the DB to find a food with a higher nutri_score in the category  
     Display the result  
     
-    
+     
+Function - manage_entries(conditions)  
+    Check that the user enter something according to the conditions.  
     
