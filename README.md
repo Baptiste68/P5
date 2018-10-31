@@ -28,9 +28,9 @@ Function – main_menu()
     The user then choose either 1 or 2  
 
 
-Function – sub_menu()  
-    This function will start the process of finding a substitute.  
-    This function will use 4 functions:  
+If "Find a substitute" has been selected    
+It will start the process of finding a substitute.  
+This process will use 4 functions:  
     -   connect_db
     -	select_category   
     -	select_food   
