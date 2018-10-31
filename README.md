@@ -31,7 +31,7 @@ Function – main_menu()
 If "Find a substitute" has been selected    
 It will start the process of finding a substitute.  
 This process will use 4 functions:  
-    -   connect_db
+    -   connect_db  
     -	select_category   
     -	select_food   
     -	get_substitute   
