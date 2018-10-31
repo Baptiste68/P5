@@ -49,7 +49,7 @@ Function – select_category()
 
 
 Function – select_food(category)   
-    Request the DB to get all food related to the category
+    Request the DB to get all food related to the category  
     Display the different foods  
     The user enters a number related to a food.  
     Manage errors (see function "manage_entries()".  
