@@ -14,7 +14,8 @@ def manage_entries(min, max):
             if chose >= min and chose <= max:
                 break
             else:
-                print("Le choix doit etre compris entre " + str(min) + " et "+ str(max) + " \n")
+                print("Le choix doit etre compris entre " \
+                + str(min) + " et "+ str(max) + " \n")
         except:
             print("Vous n'avez pas saisi un nombre \n")
             chose = -1
@@ -54,8 +55,9 @@ def categories_or_food_menu(database, id_Categories):
     if id_Categories == 0: # If it is 0 it means we chose a Categories
         my_request = "SELECT id_Categories, name_Categories FROM Categories"
     else: # Otherwise we chose a food
-        my_request = "SELECT DISTINCT Food.id_Food, name_Food FROM Food INNER JOIN foodcate \
-        ON Food.id_Food = foodcate.id_Food WHERE foodcate.id_Categories =" + str(id_Categories)
+        my_request = "SELECT DISTINCT Food.id_Food, name_Food FROM Food \
+        INNER JOIN foodcate ON Food.id_Food = foodcate.id_Food \
+        WHERE foodcate.id_Categories =" + str(id_Categories)
     my_result = database.send_query(my_request)
 
     print("#################################")
@@ -71,10 +73,24 @@ def categories_or_food_menu(database, id_Categories):
 
     chose = manage_entries(1, nb_row)
 
-    chose_one = my_result[chose - 1]
+    chose_one = my_result[chose - 1] # Get the id of the chose Category / Food
 
     return chose
 
+def find_substitute(database, id_Food, id_Categories):
+    my_request = "SELECT nutri_score_Food FROM Food WHERE id_Food=" + str(id_Food)
+    my_score = database.send_query(my_request)
+    my_score = my_score[0][0]
+
+    my_request = "SELECT DISTINCT * FROM Food \
+    INNER JOIN foodcate ON Food.id_Food = foodcate.id_Food \
+    WHERE foodcate.id_Categories = " + str(id_Categories) + \
+    " AND Food.nutri_score_Food < " + str(my_score)
+
+    # TODO: Link letter to a number
+    my_result = database.send_query(my_request)
+
+    print(my_result)
 
 if __name__ == '__main__':
     db = Databaselink()
@@ -82,4 +98,6 @@ if __name__ == '__main__':
     chose = main_menu()
     if chose == 1:
         category = categories_or_food_menu(db, 0)
-        categories_or_food_menu(db, category)
+        idFood = categories_or_food_menu(db, category)
+        find_substitute(db, category, idFood)
+
