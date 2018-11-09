@@ -25,40 +25,53 @@ Function – main_menu()
     In this main menu you have 2 choices:  
     1	Find a substitute  
     2	Check my substitutes  
-    The user then choose either 1 or 2  
+    The user then choose either 1 or 2 (entries check with "manage_entries" function)  
 
 
+If "Check my substitutes has been selected  
+It will launch my_substitute_menu  
+
+Function - my_substitute_menu(database)  
+Request the DB to get the list of substitute saved.  
+Show the list of all substitute saved (and their substituted food).  
+User has the possiblity to get details on a substitute (check entries with "manage_entries" function)  
+Display all informations of the selected food.  
+
+
+### Find a substitute process
 If "Find a substitute" has been selected    
 It will start the process of finding a substitute.  
-This process will use 4 functions:  
-    -   connect_db  
-    -	select_category   
-    -	select_food   
-    -	get_substitute   
+This process will use 3 functions:  
+    -   connect_to_foodexo  
+    -	categories_or_food_menu  
+    -	find_substitute   
+    -   save_substitute  
     
 
-Function - connect_db()  
+Function - connect_to_foodexo()  
     Connect the user to the DB so we can do requests.  
 
-Function – select_category()  
-    Request the DB to get all categories' name.  
-    Display the different Category.  
-    The user enters a number related to a category.  
-    Manage errors (see function "manage_entries()".  
-    The category is then returned  
 
+Function – categories_or_food_menu(database, id_categories)  
+    Check what type of menu to display:  
+    id_categories = 0 -> categories menu. Otherwise food menu  
+    Request the DB to get all categories' or food's name.  
+    Display the results.  
+    The user enters a number related to a category or food.  
+    Manage errors (see function "manage_entries()").  
+    The category or food id is then returned  
 
-Function – select_food(category)   
-    Request the DB to get all food related to the category  
-    Display the different foods  
-    The user enters a number related to a food.  
-    Manage errors (see function "manage_entries()".  
-    The category and the nutri_score is then returned  
+ 
 
-Function - get_substitute(category, nutri_score)  
-    Request the DB to find a food with a higher nutri_score in the category  
-    Display the result  
+Function - find_substitute(database, id_food, id_categories)  
+    Request the DB to get the nutri_score of the choosen food  
+    Request the DB to find one food in the same category with a higher nutri_score  
     
+     
+Function - save_substitute(substitute, id_food_is_substitute, database)  
+    Ask the user if he wants to save his search result  
+    If yes, save the two id_food (substitute and substituted) in DB  
+     
      
 Function - manage_entries(conditions)  
     Check that the user enter something according to the conditions.  
