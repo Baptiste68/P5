@@ -37,4 +37,12 @@ if(response.ok):
         print(jData.get('products')[i].get('traces'))
         print(jData.get('products')[i].get('nutrition_grades_tags'))
         print(jData.get('products')[i].get('link'))
+        with open("gensql.sql", "w") as my_file:
+            my_file.write("VALUES (\'"\
+            + str(jData.get('products')[i].get('product_name_fr')).replace('\'', '\'\'') + "\', \'"\
+            + str(jData.get('products')[i].get('quantity')).replace('\'', '\'\'') + "\', \'"\
+            + str(jData.get('products')[i].get('stores')).replace('\'', '\'\'') + "\', \'"\
+            + str(jData.get('products')[i].get('traces')).replace('\'', '\'\'') + "\', \'"\
+            + str(jData.get('products')[i].get('nutrition_grades_tags')[0]).replace('\'', '\'\'') + "\', \'"\
+            + str(jData.get('products')[i].get('link')).replace('\'', '\'\'') + "\')")
 
