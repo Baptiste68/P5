@@ -33,9 +33,7 @@ def main_menu():
     print("1 - Trouver un substitue")
     print("2 - Montrer mes substitues \n")
 
-    chose = manage_entries(1, 2)
-
-    return chose
+    return manage_entries(1, 2)
 
 
 def my_substitute_menu(database):
@@ -144,8 +142,7 @@ score nutritionnel de sa catégorie ")
  substitue de " + str(database.send_query(my_result)[0][1]) )
             else:
                 print("Cette combinaison est déjà sauveguardée")
-        else:
-            return "return"
+
 
 
 def quit_program():
@@ -173,3 +170,4 @@ if __name__ == '__main__':
             my_substitute_menu(db)
             quit = quit_program()
     db.close_all()
+
