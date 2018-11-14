@@ -28,4 +28,21 @@ class Databaselink:
         mycursor = self.cnx.cursor()
         mycursor.execute(my_query)
         myresult = mycursor.fetchall()
+        mycursor.close()
         return(myresult)
+
+    def send_insert(self, my_insert):
+        mycursor = self.cnx.cursor()
+        mycursor.execute(my_insert)
+        try:
+            self.cnx.commit()
+        except mysql.connector.Error as error :
+            connection.rollback() #rollback if any exception occured
+            print("Failed inserting record into python_users table {}".format(error))
+        mycursor.close()
+
+    def close_all(self):
+        if(self.cnx.is_connected()):
+            self.cnx.close()
+            print("MySQL connection is closed")
+
