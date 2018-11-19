@@ -36,6 +36,19 @@ def main_menu():
     return manage_entries(1, 2)
 
 
+def display_result(food, type):
+    print(food)
+    food = str(food[0]).split('\',')
+    print(type)
+    print("-------------------")
+    print("Nom : " + str(food[0]).split(',')[1])
+    print("Quantité : " + str(food[1]))
+    print("Traces : " + str(food[2]))
+    print("Magasin : " + str(food[3]))
+    print("Score : " + str(food[4]))
+    print("Link : " + str(food[5]))
+
+
 def my_substitute_menu(database):
     """
         Function that show user substitute
@@ -44,7 +57,7 @@ def my_substitute_menu(database):
     print("Voici vos aliments sauvegardé")
     print("----------------------------")
 
-    my_query = "SELECT sub.id_food, sub.name_food, issub.name_food \
+    my_query = "SELECT sub.id_food, sub.name_food, issub.name_food, issub.id_food \
     FROM `saved` s, `Food` sub, `Food`issub \
     WHERE sub.id_food = s.Food_id_foodsub \
     AND issub.id_Food = s.Food_id_foodissub "
@@ -63,8 +76,13 @@ def my_substitute_menu(database):
     chose = manage_entries(0, row)
     if chose is not 0:
         sub_id = my_result[chose - 1][0]
+        issub_id = my_result[chose - 1][3]
         sub_details = "SELECT * FROM Food WHERE id_food = \'"+ str(sub_id) + "\'"
-        print(database.send_query(sub_details))
+        issub_details = "SELECT * FROM Food WHERE id_food = \'"+ str(issub_id) + "\'"
+        sub_result = database.send_query(sub_details)
+        issub_result = database.send_query(issub_details)
+        display_result(sub_result, "Substitue")
+        display_result(issub_result, "Substitué")
         input("Appuyez sur une touche pour continuer....")
 
 
@@ -93,7 +111,11 @@ def categories_or_food_menu(database, id_categories):
         nb_row = nb_row + 1
 
     # Get the id of the chose Category / Food
-    return my_result[manage_entries(1, nb_row) - 1][0]
+    if nb_row == 0:
+        print("Il n'y a pas de catégorie/aliment")
+        return quit_program()
+    else:
+        return my_result[manage_entries(1, nb_row) - 1][0]
 
 
 def find_substitute(database, id_food, id_categories):
@@ -117,6 +139,7 @@ def save_substitute(substitute, id_food_is_substitute, database):
         print("Votre recherche n'a donné aucun résultat")
         print("Cet aliment a déjà le meilleur \
 score nutritionnel de sa catégorie ")
+        input("Appuyez sur une touche pour continuer....")
     else:
         print("Voici votre substitue")
         print(substitute)
@@ -140,8 +163,11 @@ score nutritionnel de sa catégorie ")
                 AND issub.id_Food = " + str(id_food_is_substitute)
                 print(str(database.send_query(my_result)[0][0]) + " sauvé comme\
  substitue de " + str(database.send_query(my_result)[0][1]) )
+                input("Appuyez sur une touche pour continuer....")
             else:
                 print("Cette combinaison est déjà sauveguardée")
+                print("lol")
+                input("Appuyez sur une touche pour continuer....")
 
 
 
