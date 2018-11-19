@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `foodexo`.`Food` (
   `name_food` TEXT NOT NULL,
   `quantity_food` VARCHAR(45) NULL,
   `dangers_food` TEXT NULL,
-  `store_food` VARCHAR(45) NULL,
+  `store_food` TEXT NULL,
   `nutri_score_food` CHAR(1) NOT NULL,
   `link_food` TEXT NULL,
   PRIMARY KEY (`id_food`))
@@ -82,8 +82,6 @@ CREATE TABLE IF NOT EXISTS `foodexo`.`saved` (
   `Food_id_foodsub` SMALLINT NOT NULL,
   `Food_id_foodissub` SMALLINT NOT NULL,
   PRIMARY KEY (`Food_id_foodsub`, `Food_id_foodissub`),
-  INDEX `fk_saved_Foodissub_idx` (`Food_id_foodissub` ASC) VISIBLE,
-  INDEX `fk_saved_Foodsub_idx` (`Food_id_foodsub` ASC) VISIBLE,
   CONSTRAINT `fk_saved_Foodsub_idx`
     FOREIGN KEY (`Food_id_foodsub`)
     REFERENCES `foodexo`.`Food` (`id_food`)
