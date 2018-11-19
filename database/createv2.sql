@@ -28,7 +28,7 @@ DROP TABLE IF EXISTS `foodexo`.`Food` ;
 CREATE TABLE IF NOT EXISTS `foodexo`.`Food` (
   `id_food` SMALLINT NOT NULL AUTO_INCREMENT,
   `name_food` TEXT NOT NULL,
-  `quantity_food` VARCHAR(45) NULL,
+  `quantity_food` TEXT NULL,
   `dangers_food` TEXT NULL,
   `store_food` TEXT NULL,
   `nutri_score_food` CHAR(1) NOT NULL,
