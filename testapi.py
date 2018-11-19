@@ -2,47 +2,56 @@ import requests
 import json
 import random
 
+from databaselink import Databaselink
 
-#url = "https://world.openfoodfacts.org/api/v0/product/737628064502.json"
-url = "https://fr.openfoodfacts.org/categories.json"
-response = requests.get(url)
+db = Databaselink()
+db.connect_to_foodexo()
 
-if(response.ok):
-    jData = json.loads(response.content)
-    val = []
-    i = 1
-    while i <= 10:
-        rand_place = random.randint(0,len(jData.get('tags')) - 1)
-        data = jData.get('tags')[rand_place].get('name')
-        nb_prod = jData.get('tags')[rand_place].get('products')
-        if (data not in val) and (data[2] is not ':') and (nb_prod > 20):
-            val.append(data)
-            i = i + 1
-    #val = jData.get('product').get('categories')
-    for k in val:
-        print(k)
-else:
-    print("nok")
+categories_list = ["Boissons","Viandes","Surgelés","Conserves","Fromages","Biscuits","Chocolats", "Apéritifs", "Soupes", "Pizzas"]
 
 
-url = "https://fr.openfoodfacts.org/category/"+ val[0] +".json"
-response = requests.get(url)
-if(response.ok):
-    jData = json.loads(response.content)
-    for i in range(3):
-        print("\n")
-        print(jData.get('products')[i].get('product_name_fr'))
-        print(jData.get('products')[i].get('quantity'))
-        print(jData.get('products')[i].get('stores'))
-        print(jData.get('products')[i].get('traces'))
-        print(jData.get('products')[i].get('nutrition_grades_tags'))
-        print(jData.get('products')[i].get('link'))
-        with open("gensql.sql", "w") as my_file:
-            my_file.write("VALUES (\'"\
-            + str(jData.get('products')[i].get('product_name_fr')).replace('\'', '\'\'') + "\', \'"\
-            + str(jData.get('products')[i].get('quantity')).replace('\'', '\'\'') + "\', \'"\
-            + str(jData.get('products')[i].get('stores')).replace('\'', '\'\'') + "\', \'"\
-            + str(jData.get('products')[i].get('traces')).replace('\'', '\'\'') + "\', \'"\
-            + str(jData.get('products')[i].get('nutrition_grades_tags')[0]).replace('\'', '\'\'') + "\', \'"\
-            + str(jData.get('products')[i].get('link')).replace('\'', '\'\'') + "\')")
+for category in categories_list:
+    my_insert = "INSERT INTO categories (name_categories)\
+     VALUES (\'" + category + "\')"
+    db.send_insert(my_insert)
+    url = "https://fr.openfoodfacts.org/category/"+ category +".json"
+    response = requests.get(url)
+    if(response.ok):
+        jData = json.loads(response.content)
+        k, i = 0, 0
+        while k < 20:
+            print(jData.get('products')[i].get('nutrition_grades_tags')[0])
+            print(i)
+            if len(jData.get('products')[i].get('nutrition_grades_tags')[0])\
+             is not 1 :
+                i = i + 1
+            else:
+                product_name = jData.get('products')[i].get('product_name_fr')
+                quantity = jData.get('products')[i].get('quantity')
+                dangers = jData.get('products')[i].get('traces')
+                stores = jData.get('products')[i].get('stores')
+                nutri_score = jData.get('products')[i].get('nutrition_grades_tags')[0]
+                link = jData.get('products')[i].get('link')
+                my_insert = "INSERT INTO food ( name_food, quantity_food, \
+                dangers_food, store_food, nutri_score_food, link_food ) VALUES (\'"\
+                + str(product_name).replace('\'', '\'\'') + "\', \'"\
+                + str(quantity).replace('\'', '\'\'') + "\', \'"\
+                + str(dangers).replace('\'', '\'\'') + "\', \'"\
+                + str(stores).replace('\'', '\'\'') + "\', \'"\
+                + str(nutri_score).replace('\'', '\'\'') + "\', \'"\
+                + str(link).replace('\'', '\'\'') + "\')"
+                db.send_insert(my_insert)
+                #print(jData.get('products')[i].get('categories'))
+                categories_list.remove(category)
+                for cat in jData.get('products')[i].get('categories').split(","):
+                    if cat in categories_list:
+                        my_insert = "INSERT INTO foodcate SELECT f.id_food, c.id_categories FROM ( SELECT id_food FROM Food WHERE name_Food = \'" + product_name + "\' AND quantity_food = \'" + quantity + "\') AS f CROSS JOIN ( SELECT id_categories FROM Categories WHERE name_Categories = \'" + cat + "\' ) AS c"
+                        db.send_insert(my_insert)
+                categories_list.append(category)
+                my_insert = "INSERT INTO foodcate SELECT f.id_food, c.id_categories FROM ( SELECT id_food FROM Food WHERE name_Food = \'" + product_name + "\' AND quantity_food = \'" + quantity + "\') AS f CROSS JOIN ( SELECT id_categories FROM Categories WHERE name_Categories = \'" + category + "\' ) AS c"
+                db.send_insert(my_insert)
+                i = i + 1
+                k = k + 1
+
+
 
