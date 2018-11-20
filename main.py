@@ -30,23 +30,38 @@ def main_menu():
     print("#################################")
     print("Bonjour, bienvenu dans le programme de PurBeurre")
     print("Veuillez choisir une option en tapant '1' ou '2'")
-    print("1 - Trouver un substitue")
-    print("2 - Montrer mes substitues \n")
+    print("1 - Trouver un substitut")
+    print("2 - Montrer mes substituts \n")
 
     return manage_entries(1, 2)
 
 
 def display_result(food, type):
-    print(food)
     food = str(food[0]).split('\',')
+    quantity = str(food[1]).replace('\'','')
+    traces = str(food[2]).replace('\'','')
+    store = str(food[3]).replace('\'','')
+    link = str(food[5]).replace('\'','')
     print(type)
     print("-------------------")
-    print("Nom : " + str(food[0]).split(',')[1])
-    print("Quantité : " + str(food[1]))
-    print("Traces : " + str(food[2]))
-    print("Magasin : " + str(food[3]))
-    print("Score : " + str(food[4]))
-    print("Link : " + str(food[5]))
+    print("Nom : " + str(food[0]).split(',')[1].replace('\'',''))
+    if str(quantity) == " None":
+        print("Quantité : Non indiquée")
+    else:
+        print("Quantité : " + quantity)
+    if traces == " None":
+        print("Traces : Non indiquées")
+    else:
+        print("Traces : " + traces)
+    if store == " None":
+        print("Magasin : Non indiqué")
+    else:
+        print("Magasin : " + str(food[3]).replace('\'',''))
+    print("Score : " + str(food[4]).replace('\'',''))
+    if link == " None":
+        print("Lien : Non indiqué")
+    else:
+        print("Link : " + str(food[5]).replace('\'',''))
 
 
 def my_substitute_menu(database):
@@ -64,7 +79,7 @@ def my_substitute_menu(database):
     my_result = database.send_query(my_query)
 
     row = 0
-    print("# - Substitue ---> Substitué")
+    print("# - Substitut ---> Substitué")
     print("----------------------------")
     for line in my_result:
         print(str(row + 1) + " - " + line[1] + " ---> " + line[2])
@@ -81,7 +96,7 @@ def my_substitute_menu(database):
         issub_details = "SELECT * FROM Food WHERE id_food = \'"+ str(issub_id) + "\'"
         sub_result = database.send_query(sub_details)
         issub_result = database.send_query(issub_details)
-        display_result(sub_result, "Substitue")
+        display_result(sub_result, "Substitut")
         display_result(issub_result, "Substitué")
         input("Appuyez sur une touche pour continuer....")
 
@@ -162,11 +177,10 @@ score nutritionnel de sa catégorie ")
                 WHERE sub.id_food = " + id_substitute + " \
                 AND issub.id_Food = " + str(id_food_is_substitute)
                 print(str(database.send_query(my_result)[0][0]) + " sauvé comme\
- substitue de " + str(database.send_query(my_result)[0][1]) )
+ substitut de " + str(database.send_query(my_result)[0][1]) )
                 input("Appuyez sur une touche pour continuer....")
             else:
                 print("Cette combinaison est déjà sauveguardée")
-                print("lol")
                 input("Appuyez sur une touche pour continuer....")
 
 
