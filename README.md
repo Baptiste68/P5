@@ -1,5 +1,14 @@
 # Utilisez les données publiques de l'OpenFoodFacts
 
+## Preparation
+Create a Python virtual environment:  
+virtualenv -p python3 env  
+
+
+Install the dependancies via ""requirements.txt":  
+pip install -r requirements.txt  
+
+
 This program is here to help you find substitute of your daily life aliments.
 
 
