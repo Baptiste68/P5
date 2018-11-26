@@ -63,12 +63,12 @@ Function – categories_or_food_menu(database, id_categories)
 
  
 
-Function - find_substitute(database, id_food, id_categories)  
+Function - find_substitute(database, id_food, id_categories, sign)  
     Request the DB to get the nutri_score of the choosen food  
-    Request the DB to find one food in the same category with a higher nutri_score  
+    Request the DB to find one food in the same category with a nutri_score higher or smaller (related to sign)  
     
      
-Function - save_substitute(substitute, id_food_is_substitute, database)  
+Function - save_substitute(substitute, id_food_is_substitute, database, category)  
     Ask the user if he wants to save his search result  
     If yes, save the two id_food (substitute and substituted) in DB  
      
@@ -76,3 +76,24 @@ Function - save_substitute(substitute, id_food_is_substitute, database)
 Function - manage_entries(conditions)  
     Check that the user enter something according to the conditions.  
     
+    
+
+### Other functions  
+Function - quit_program()  
+    Ask the user if he wants to quit the program.  
+    
+    
+Function - display_result(food, type)  
+    Display main information about a food.  
+    
+    
+### Database  
+The relation with database are manage throught databaselink.py  
+You need to set the correct configuration in the "self.config"
+
+There is then 2 function to send query:
+-	send_query -> simple query to request the database  
+-	send_insert -> specific query to insert data in the database and comit the result  
+
+The close_all function is there to close the connection at the end of the program.  
+
