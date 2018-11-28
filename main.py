@@ -138,33 +138,56 @@ def find_substitute(database, id_food, id_categories, signe):
     my_score = database.send_query(my_request)
     my_score = my_score[0][0]
 
+    if signe == ">":
+        ordering = " ORDER BY Food.nutri_score_food LIMIT 1"
+    else:
+        ordering = " ORDER BY RAND() LIMIT 1"
+
     my_request = "SELECT DISTINCT * FROM Food \
     INNER JOIN foodcate ON Food.id_food = foodcate.Food_id_food \
     WHERE foodcate.Categories_id_categories = " + str(id_categories) + \
     " AND ASCII (Food.nutri_score_food) " + signe + " " \
     + str(ord(my_score)) + " AND foodcate.Food_id_food <> " + str(id_food) \
-    + " ORDER BY RAND() LIMIT 1"
+    + " " + ordering
 
-    return database.send_query(my_request)
+    return database.send_query(my_request), signe
 
 
-def save_substitute(substitute, id_food_is_substitute, database, category):
+def save_substitute(substitute, id_food_is_substitute, database, category, signe):
     print("\n#################################")
     if substitute == []:
-        print("Votre recherche n'a donné aucun résultat")
-        print("Cet aliment a déjà le meilleur \
-score nutritionnel de sa catégorie ")
-        print("Désirez-vous trouver un substitut de même valeur ou inférieur ?")
-        print("1 - Oui !")
-        print("2 - Non ! \n")
-        chose = manage_entries(1, 2)
-        if chose == 2:
-            input("Appuyez sur une touche pour continuer....")
+        if signe == "<":
+            print("Votre recherche n'a donné aucun résultat")
+            print("Cet aliment a déjà le meilleur \
+    score nutritionnel de sa catégorie ")
+            print("Désirez-vous trouver un substitut de même valeur ?")
+            print("1 - Oui !")
+            print("2 - Non ! \n")
+            chose = manage_entries(1, 2)
+            if chose == 2:
+                input("Appuyez sur une touche pour continuer....")
+            else:
+                substitute, signe = find_substitute(database, id_food_is_substitute, \
+                category, "=")
+                save_substitute(substitute, id_food_is_substitute, database, category, signe)
+        elif signe == "=":
+            print("Cet aliment n'a pas de substitut de même valeur")
+            print("Désirez-vous trouver un substitut de valeur inférieur ?")
+            print("1 - Oui !")
+            print("2 - Non ! \n")
+            chose = manage_entries(1, 2)
+            if chose == 2:
+                input("Appuyez sur une touche pour continuer....")
+            else:
+                substitute, signe = find_substitute(database, id_food_is_substitute, \
+                category, ">")
+                save_substitute(substitute, id_food_is_substitute, database, category, signe)
         else:
-            save_substitute(find_substitute(database, id_food_is_substitute, \
-            category, ">="), id_food_is_substitute, database, category)
+            print("Aucun résultat possible")
+            input("Appuyez sur une touche pour continuer....")
     else:
         print("Voici votre substitut")
+        print(substitute)
         display_result(substitute, "")
         #print(substitute)
         print("Voulez-vous sauveguarder votre résultat ?")
@@ -213,7 +236,8 @@ if __name__ == '__main__':
         if chose == 1:
             category = categories_or_food_menu(db, 0)
             idFood = categories_or_food_menu(db, category)
-            save_substitute(find_substitute(db, idFood, category, "<"), idFood, db, category)
+            substitute, signe = find_substitute(db, idFood, category, "<")
+            save_substitute(substitute, idFood, db, category, signe)
             quit = quit_program()
         elif chose == 2:
             my_substitute_menu(db)
