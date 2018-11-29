@@ -78,6 +78,8 @@ Function - find_substitute(database, id_food, id_categories, sign)
     
      
 Function - save_substitute(substitute, id_food_is_substitute, database, category)  
+    Check if a subsitute has been found. If not, ask the customer if he wants to redo a research with an other condition  
+    Display the founded substitute  
     Ask the user if he wants to save his search result  
     If yes, save the two id_food (substitute and substituted) in DB  
      
