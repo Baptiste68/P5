@@ -4,10 +4,15 @@
 from databaselink import Databaselink
 
 """
-    This module is
+    This module is the main module of the program
+    It allows you to run all functionalities
 """
 
 def manage_entries(min, max):
+    """
+        This function is to manage the keyboard entries
+        from the user
+    """
     while True:
         try:
             chose = int(input("Entrer un chiffre :   "))
@@ -37,6 +42,9 @@ def main_menu():
 
 
 def display_result(food, type):
+    """
+        Function that display the information of a food
+    """
     food = str(food[0]).split('\',')
     quantity = str(food[1]).replace('\'','')
     traces = str(food[2]).replace('\'','')
@@ -66,7 +74,7 @@ def display_result(food, type):
 
 def my_substitute_menu(database):
     """
-        Function that show user substitute
+        Function that show user's substitute
     """
     print("\n#################################")
     print("Voici vos aliments sauvegardé")
@@ -103,7 +111,7 @@ def my_substitute_menu(database):
 
 def categories_or_food_menu(database, id_categories):
     """
-        Function that display the category menu
+        Function that display the category or food menu
     """
 
     if id_categories == 0: # If it is 0 it means we chose a Categories
@@ -130,10 +138,14 @@ def categories_or_food_menu(database, id_categories):
         print("Il n'y a pas de catégorie/aliment")
         return quit_program()
     else:
+        # return the ID of the food or category
         return my_result[manage_entries(1, nb_row) - 1][0]
 
 
 def find_substitute(database, id_food, id_categories, signe):
+    """
+        Function that find a substitute according to the condition (signe)
+    """
     my_request = "SELECT nutri_score_Food FROM Food WHERE id_food=" + str(id_food)
     my_score = database.send_query(my_request)
     my_score = my_score[0][0]
@@ -154,6 +166,11 @@ def find_substitute(database, id_food, id_categories, signe):
 
 
 def save_substitute(substitute, id_food_is_substitute, database, category, signe):
+    """
+        Function that check if a substitute has been found
+        If not, it will ask user if he wants to use another condition
+        Then, it display the substitute and ask if the user want to save it
+    """
     print("\n#################################")
     if substitute == []:
         if signe == "<":
@@ -218,6 +235,9 @@ def save_substitute(substitute, id_food_is_substitute, database, category, signe
 
 
 def quit_program():
+    """
+        Function that allows the user to leave the program
+    """
     print("\nQue souhaitez-vous faire maintenant : ")
     print("1 - Quitter le programme")
     print("2 - Retourner au menu principal")
