@@ -211,7 +211,6 @@ def save_substitute(substitute, id_food_is_substitute, database, category, signe
             input("Appuyez sur une touche pour continuer....")
     else:
         print("Voici votre substitut")
-        print(substitute)
         display_result(substitute, "")
         print("Voulez-vous sauveguarder votre résultat ?")
         print("1 - Oui !")
