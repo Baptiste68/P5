@@ -8,6 +8,9 @@ virtualenv -p python3 env
 Install the dependancies via ""requirements.txt":  
 pip install -r requirements.txt  
 
+Set the right configuration in databaselink.py to connect  
+Run the fill_db.py file to create and populate the database  
+
 
 This program is here to help you find substitute of your daily life aliments.
 
